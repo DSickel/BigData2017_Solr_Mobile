@@ -59,7 +59,7 @@ namespace Xamarin_Solr.Service
             if (response.Result.IsSuccessStatusCode)
             {
                 System.Diagnostics.Debug.WriteLine("Sucess: " + response.Result.Content.ReadAsStringAsync().Result);
-                var result = response.Result.
+                var result = response.Result;
             }
         }
 

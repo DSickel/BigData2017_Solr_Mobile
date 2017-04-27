@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using Xamarin_Solr.View;
 
 namespace Xamarin_Solr
 {
@@ -12,22 +13,10 @@ namespace Xamarin_Solr
         public App()
         {
             // The root page of your application
-            var content = new ContentPage
-            {
-                Title = "Xamarin_Solr",
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
+            var content = new QueryPage();
 
-            MainPage = new NavigationPage(content);
+
+            MainPage = content;
         }
 
         protected override void OnStart()

@@ -11,8 +11,6 @@ namespace Xamarin_Solr.ViewModel
     public class QueryViewModel : BaseViewModel
     {
         private ObservableCollection<BigDatDocument> _listOfDocuments; // backing field
-
-
         public ObservableCollection<BigDatDocument> ListOfDocuments // Property
         {
             get { return _listOfDocuments; }
@@ -23,5 +21,12 @@ namespace Xamarin_Solr.ViewModel
             }
         }
 
+        public QueryViewModel()
+        {
+            Title = "Customer List";
+            Icon = "icon.png";
+            IsBusy = true;
+
+        }
     }
 }
