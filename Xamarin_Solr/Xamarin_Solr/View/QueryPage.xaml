@@ -39,16 +39,16 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
-              <Label Text="Dummy" FontSize="15"
+              <Label Text="{Binding Title}" FontSize="15"
                      VerticalOptions="StartAndExpand"
                      Grid.Column="0" Grid.ColumnSpan="2"
                      Grid.Row="0"/>
-              <Label Text="Dummy" FontSize="12"
+              <Label Text="{Binding Id}" FontSize="12"
                      VerticalOptions="CenterAndExpand"
                      Grid.Column="0"
                      Grid.Row="1"/>
               <!--</StackLayout>-->
-              <Label Text="Dummy" FontSize="12"
+              <Label Text="{Binding PubDate}" FontSize="12"
                      Grid.Column="1"
                      Grid.Row="1"
                      VerticalOptions="EndAndExpand" />

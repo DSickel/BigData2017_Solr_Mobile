@@ -26,6 +26,15 @@ namespace Xamarin_Solr.ViewModel
             Title = "Customer List";
             Icon = "icon.png";
             IsBusy = true;
+            ListOfDocuments = new ObservableCollection<BigDatDocument>();
+            var docu = new BigDatDocument();
+            docu.Title = "Test-Title";
+            docu.Id = "I-ETTEST";
+            docu.PubDate = 234124515;
+            docu.Content = "langere Content, sollte eventuell in finalen Version auf separater Seite dann angezeigt werden,\n"
+                + " dadurch bleibt alles etwas übersichtlicher und wir hätten eine Art simple Navigation in der App.";
+
+            ListOfDocuments.Add(docu);   
 
         }
     }
