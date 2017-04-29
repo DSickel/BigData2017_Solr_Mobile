@@ -14,5 +14,10 @@ namespace Xamarin_Solr.View
         {
             InitializeComponent();
         }
+
+        public void OnButtonClicked(object sender, EventArgs args)
+        {
+            // TODO
+        }
     }
 }

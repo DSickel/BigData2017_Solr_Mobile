@@ -22,7 +22,10 @@
       <RowDefinition Height="75" />
     </Grid.RowDefinitions>
     
-  <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+    <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+    
+    <SearchBar Text="{Binding SearchText}"
+               SearchCommand="{Binding SearchCommand}"/>
     <ListView x:Name="documentList"
               ItemsSource="{Binding ListOfDocuments}"
               HasUnevenRows="True">
@@ -57,6 +60,15 @@
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
+    <ActivityIndicator Grid.Column="0" Grid.ColumnSpan="3"
+                       Grid.Row="0" Grid.RowSpan="2"
+                       IsVisible="{Binding IsBusy}"
+                       IsRunning="{Binding IsBusy}"
+                       VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"/>
   </StackLayout>
+    <StackLayout Padding="5" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" BackgroundColor="#0090CC">
+      <Button Text="Search!" Grid.Row="1" Grid.Column="1"
+           Clicked="OnButtonClicked" />
+    </StackLayout>
   </Grid>
 </ContentPage>

@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SolrNetLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin_Solr.Model;
 
 namespace Xamarin_Solr.Service
 {
@@ -26,7 +29,7 @@ namespace Xamarin_Solr.Service
         private void CreateHttpClient()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:8983/solr/");
+            httpClient.BaseAddress = new Uri("http://192.168.178.152/solr/");
             httpClient.Timeout = new TimeSpan(0, 2, 0);
             httpClient.DefaultRequestHeaders.Accept.Add(
              new MediaTypeWithQualityHeaderValue("application/json"));
@@ -34,33 +37,39 @@ namespace Xamarin_Solr.Service
             RestClient = httpClient;
         }
 
-        public void SendQueryRequest_Rest(string endpoint, Model.SolrQuery solrquery)
+        public async Task<ObservableCollection<BigDatDocument>> SendQueryRequest_Rest(string endpoint, Model.SolrQuery solrquery)
         {
             var restClient = RestClient;
 
-            System.Diagnostics.Debug.WriteLine("SendQueryRest: Query started");
-            // Testing
-            // solrquery.Query = "Interstate";
-
-            endpoint = QUERY_BASE_GET_REQUEST + "Interstate";
-
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            var json = JsonConvert.SerializeObject(solrquery, settings);
-
-            var method = new HttpMethod("GET");
-            var request = new HttpRequestMessage(method, endpoint);
-            //{
-            //    Content = new StringContent(json, Encoding.UTF8, "application/json")
-            //};
-
-            var response = restClient.SendAsync(request);
-
-            if (response.Result.IsSuccessStatusCode)
+            try
             {
-                System.Diagnostics.Debug.WriteLine("Sucess: " + response.Result.Content.ReadAsStringAsync().Result);
-                var result = response.Result;
+                endpoint = QUERY_BASE_GET_REQUEST + "Interstate";
+                var requestUri = Uri.EscapeUriString(endpoint);
+
+                System.Diagnostics.Debug.WriteLine("SendQueryRest: Query started");
+
+                var settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+
+                var method = new HttpMethod("GET");
+                var request = new HttpRequestMessage(method, endpoint);
+
+                var response = await restClient.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    System.Diagnostics.Debug.WriteLine("Sucess: " + response.Content.ReadAsStringAsync().Result);
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var jsonValue = JObject.Parse(json).ToString();
+                    var objectList = JsonConvert.DeserializeObject<ObservableCollection<BigDatDocument>>(jsonValue);
+                    return objectList;
+                }
+          
             }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
         }
 
         public void SendQueryRequest_SolrNet()
