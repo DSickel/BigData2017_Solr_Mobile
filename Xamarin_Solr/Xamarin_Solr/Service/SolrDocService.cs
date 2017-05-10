@@ -29,7 +29,7 @@ namespace Xamarin_Solr.Service
         private void CreateHttpClient()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://192.168.178.152/solr/");
+            httpClient.BaseAddress = new Uri("http://192.168.43.194:8983/solr/documentCollection/query?q=Interstate");
             httpClient.Timeout = new TimeSpan(0, 2, 0);
             httpClient.DefaultRequestHeaders.Accept.Add(
              new MediaTypeWithQualityHeaderValue("application/json"));
@@ -43,7 +43,7 @@ namespace Xamarin_Solr.Service
 
             try
             {
-                endpoint = QUERY_BASE_GET_REQUEST + "Interstate";
+               // endpoint = QUERY_BASE_GET_REQUEST + "Interstate";
                 var requestUri = Uri.EscapeUriString(endpoint);
 
                 System.Diagnostics.Debug.WriteLine("SendQueryRest: Query started");
@@ -52,17 +52,17 @@ namespace Xamarin_Solr.Service
                 settings.NullValueHandling = NullValueHandling.Ignore;
 
                 var method = new HttpMethod("GET");
+                
                 var request = new HttpRequestMessage(method, endpoint);
 
                 var response = await restClient.SendAsync(request);
-                if (response.IsSuccessStatusCode)
-                {
+               
                     System.Diagnostics.Debug.WriteLine("Sucess: " + response.Content.ReadAsStringAsync().Result);
                     var json = response.Content.ReadAsStringAsync().Result;
-                    var jsonValue = JObject.Parse(json).ToString();
-                    var objectList = JsonConvert.DeserializeObject<ObservableCollection<BigDatDocument>>(jsonValue);
+                    var jsonValue = JObject.Parse(json)["response"]["docs"];
+                    var objectList = JsonConvert.DeserializeObject<ObservableCollection<BigDatDocument>>(jsonValue.ToString());
                     return objectList;
-                }
+                
           
             }
             catch (Exception e)

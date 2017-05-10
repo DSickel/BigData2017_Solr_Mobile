@@ -1,4 +1,5 @@
-﻿using SolrNetLight.Attributes;
+﻿using Newtonsoft.Json;
+using SolrNetLight.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,17 @@ namespace Xamarin_Solr.Model
     public class BigDatDocument
     {
 
-        [SolrUniqueKey("id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
 
-        public string Title { get; set; }
+        [JsonProperty("title")]
+        public List<string> Title { get; set; }
 
-        public int PubDate { get; set; }
+        [JsonProperty("pub-date")]
+        public List<long> PubDate { get; set; }
 
-        public string Content { get; set; }
+        [JsonProperty("content")]
+        public List<string> Content { get; set; }
 
     }
 }
