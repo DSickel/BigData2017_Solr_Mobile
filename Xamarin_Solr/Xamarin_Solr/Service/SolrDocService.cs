@@ -17,7 +17,11 @@ namespace Xamarin_Solr.Service
     {
 
         // Rest API Base Endpoints
-        private const string QUERY_BASE_GET_REQUEST = "documentCollection/query?q=";
+        private const string BASE = "documentCollection/query";
+        private const string QUERY = "?q=";
+        private const string FILTER_QUERY = "&fg=";
+        private const string FACET_QUERY = "&facet.query=";
+        private const string FACET_FIELD = "&facet.field=";
 
         public HttpClient RestClient { get; set; }
 
@@ -29,7 +33,7 @@ namespace Xamarin_Solr.Service
         private void CreateHttpClient()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://192.168.43.194:8983/solr/documentCollection/query?q=Interstate");
+            httpClient.BaseAddress = new Uri("http://192.168.178.157:8983/solr/");
             httpClient.Timeout = new TimeSpan(0, 2, 0);
             httpClient.DefaultRequestHeaders.Accept.Add(
              new MediaTypeWithQualityHeaderValue("application/json"));
@@ -37,13 +41,13 @@ namespace Xamarin_Solr.Service
             RestClient = httpClient;
         }
 
-        public async Task<ObservableCollection<BigDatDocument>> SendQueryRequest_Rest(string endpoint, Model.SolrQuery solrquery)
+        public async Task<ObservableCollection<BigDatDocument>> SendQueryRequest_Rest(string term, Model.SolrQuery solrquery)
         {
             var restClient = RestClient;
 
             try
             {
-               // endpoint = QUERY_BASE_GET_REQUEST + "Interstate";
+                var endpoint = BASE + QUERY + term;
                 var requestUri = Uri.EscapeUriString(endpoint);
 
                 System.Diagnostics.Debug.WriteLine("SendQueryRest: Query started");
@@ -56,14 +60,15 @@ namespace Xamarin_Solr.Service
                 var request = new HttpRequestMessage(method, endpoint);
 
                 var response = await restClient.SendAsync(request);
-               
+                if (response.IsSuccessStatusCode)
+                { 
                     System.Diagnostics.Debug.WriteLine("Sucess: " + response.Content.ReadAsStringAsync().Result);
                     var json = response.Content.ReadAsStringAsync().Result;
                     var jsonValue = JObject.Parse(json)["response"]["docs"];
                     var objectList = JsonConvert.DeserializeObject<ObservableCollection<BigDatDocument>>(jsonValue.ToString());
                     return objectList;
-                
-          
+                } 
+
             }
             catch (Exception e)
             {
@@ -72,9 +77,58 @@ namespace Xamarin_Solr.Service
             return null;
         }
 
-        public void SendQueryRequest_SolrNet()
+        public async Task<ObservableCollection<BigDatDocument>> SendQueryRequestAdvanced_Rest(string query, string filter, string facet_field, string facet_query)
         {
-            //TODO
+            var restClient = RestClient;
+
+            try
+            {
+                
+                var endpoint = BASE + QUERY + query;
+
+                if(filter != null)
+                {
+                    endpoint = endpoint + FILTER_QUERY + filter;
+                }
+
+                if(facet_field != null)
+                {
+                    endpoint = endpoint + FACET_FIELD + facet_field;
+                }
+
+                if(facet_query != null)
+                {
+                    endpoint = endpoint + FACET_QUERY + facet_query;
+                }
+
+                var requestUri = Uri.EscapeUriString(endpoint);
+
+                System.Diagnostics.Debug.WriteLine("SendQueryRest: Query started");
+
+                var settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+
+                var method = new HttpMethod("GET");
+
+                var request = new HttpRequestMessage(method, endpoint);
+
+                var response = await restClient.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    System.Diagnostics.Debug.WriteLine("Sucess: " + response.Content.ReadAsStringAsync().Result);
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var jsonValue = JObject.Parse(json)["response"]["docs"];
+                    var objectList = JsonConvert.DeserializeObject<ObservableCollection<BigDatDocument>>(jsonValue.ToString());
+                    return objectList;
+                }
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
         }
+
     }
 }

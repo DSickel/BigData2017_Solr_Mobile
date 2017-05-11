@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"            
+             xmlns:vm="clr-namespace:Xamarin_Solr.ViewModel;assembly=Xamarin_Solr"
+             x:Class="Xamarin_Solr.View.AdvancedSearch"
+             x:Name="AdvancedSearch">
+
+  <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="10, 10, 10, 10">
+    <StackLayout BackgroundColor="#464646" Padding="0, 10, 0, 0">
+      <Label Text="Advanced Search" TextColor="White" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+      <ScrollView>
+        <StackLayout Orientation="Vertical">
+          <Label Text="Query:"
+                 HorizontalTextAlignment="Center"/>
+          <Entry Text="{Binding Adv_Query, Mode=OneWayToSource}"
+                 HorizontalTextAlignment="Center"/>
+          <Label Text="Filter:"
+                 HorizontalTextAlignment="Center"/>
+          <Entry Text="{Binding Adv_Filter, Mode=OneWayToSource}"
+                 HorizontalTextAlignment="Center"/>
+          <Label Text="Facet Field:"
+                 HorizontalTextAlignment="Center"/>
+          <Entry Text="{Binding Adv_Facet_Field, Mode=OneWayToSource}"
+                 HorizontalTextAlignment="Center"/>
+          <Label Text="Facet Query:"
+                 HorizontalTextAlignment="Center"/>
+          <Entry Text="{Binding Adv_Facet_Query, Mode=OneWayToSource}"
+                 HorizontalTextAlignment="Center"/>
+          <StackLayout Orientation="Horizontal">
+            <Button Text="Cancel"
+                    Clicked="OnCancel_Clicked"
+                    HorizontalOptions="FillAndExpand"/>
+            <Button Text="Search"
+                    Command="{Binding OnSearch_Clicked}"
+                    HorizontalOptions="FillAndExpand"/>
+          </StackLayout>
+        </StackLayout>
+      </ScrollView>
+    </StackLayout>
+  </StackLayout>
+</pages:PopupPage>

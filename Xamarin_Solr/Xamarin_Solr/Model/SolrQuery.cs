@@ -17,5 +17,11 @@ namespace Xamarin_Solr.Model
 
         [JsonProperty("limit")]
         public int Limit { get; set; }
+
+        [JsonProperty("facetQuery")]
+        public string FacetQuery { get; set; }
+
+        [JsonProperty("facetField")]
+        public string FacetField { get; set; }
     }
 }

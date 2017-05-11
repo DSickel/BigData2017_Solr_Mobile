@@ -16,12 +16,14 @@ namespace Xamarin_Solr.Model
 
         [JsonProperty("title")]
         public List<string> Title { get; set; }
+        //public string TitleSingle { get; set; }
 
         [JsonProperty("pub-date")]
         public List<long> PubDate { get; set; }
+        //public long PubDateSingle { get; set; }
 
         [JsonProperty("content")]
         public List<string> Content { get; set; }
-
+        //public string ContentSingle { get; set; }
     }
 }

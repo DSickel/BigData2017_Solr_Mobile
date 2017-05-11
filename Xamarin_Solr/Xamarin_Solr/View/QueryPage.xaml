@@ -7,6 +7,11 @@
              x:Name="QueryPage">
   <Label Text="Query Page" VerticalOptions="Center" HorizontalOptions="Center" />
 
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="icon.png" />
+    <ToolbarItem Icon="icon.png" />
+  </ContentPage.ToolbarItems>
+
   <ContentPage.BindingContext>
     <vm:QueryViewModel/>
   </ContentPage.BindingContext>
@@ -18,13 +23,21 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
+      <RowDefinition Height="75"/>
       <RowDefinition Height="*" />
       <RowDefinition Height="75" />
     </Grid.RowDefinitions>
-    
-    <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+    <StackLayout Padding="5" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" BackgroundColor="#0090CC">
+      <Label Text="Welcome to BigData Solr App!" 
+             HorizontalTextAlignment="Center"
+             VerticalTextAlignment="Center"
+             TextColor="White"
+             FontSize="24"/>
+    </StackLayout>
+    <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
     
     <SearchBar Text="{Binding SearchText}"
+               Placeholder="Enter your Term"
                SearchCommand="{Binding SearchCommand}"/>
     <ListView x:Name="documentList"
               ItemsSource="{Binding ListOfDocuments}"
@@ -42,7 +55,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
-              <Label Text="{Binding Title}" FontSize="15"
+              <Label Text="{Binding Title[0]}" FontSize="15"
                      VerticalOptions="StartAndExpand"
                      Grid.Column="0" Grid.ColumnSpan="2"
                      Grid.Row="0"/>
@@ -51,7 +64,7 @@
                      Grid.Column="0"
                      Grid.Row="1"/>
               <!--</StackLayout>-->
-              <Label Text="{Binding PubDate}" FontSize="12"
+              <Label Text="{Binding PubDate[0]}" FontSize="12"
                      Grid.Column="1"
                      Grid.Row="1"
                      VerticalOptions="EndAndExpand" />
@@ -61,14 +74,14 @@
       </ListView.ItemTemplate>
     </ListView>
     <ActivityIndicator Grid.Column="0" Grid.ColumnSpan="3"
-                       Grid.Row="0" Grid.RowSpan="2"
+                       Grid.Row="1" Grid.RowSpan="2"
                        IsVisible="{Binding IsBusy}"
                        IsRunning="{Binding IsBusy}"
                        VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"/>
   </StackLayout>
-    <StackLayout Padding="5" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" BackgroundColor="#0090CC">
-      <Button Text="Search!" Grid.Row="1" Grid.Column="1"
-           Clicked="OnButtonClicked" />
+    <StackLayout Padding="5" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" BackgroundColor="#0090CC">
+      <Button Text="Search!" Grid.Row="2" Grid.Column="1"        
+           Command="{Binding OnAdvancedSearch_Clicked}"/>
     </StackLayout>
   </Grid>
 </ContentPage>
