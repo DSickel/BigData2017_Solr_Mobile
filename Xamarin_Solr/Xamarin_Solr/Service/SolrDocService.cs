@@ -17,6 +17,7 @@ namespace Xamarin_Solr.Service
     {
 
         // Rest API Base Endpoints
+        private const string ENDPOINT = "http://192.168.178.157:8983/solr/";
         private const string BASE = "documentCollection/query";
         private const string QUERY = "?q=";
         private const string FILTER_QUERY = "&fg=";
@@ -33,11 +34,11 @@ namespace Xamarin_Solr.Service
         private void CreateHttpClient()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://192.168.178.157:8983/solr/");
+            httpClient.BaseAddress = new Uri(ENDPOINT);
             httpClient.Timeout = new TimeSpan(0, 2, 0);
             httpClient.DefaultRequestHeaders.Accept.Add(
              new MediaTypeWithQualityHeaderValue("application/json"));
-
+            System.Diagnostics.Debug.WriteLine("Vlient created");
             RestClient = httpClient;
         }
 

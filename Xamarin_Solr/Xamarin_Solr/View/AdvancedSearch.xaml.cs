@@ -20,6 +20,7 @@ namespace Xamarin_Solr.View
         public AdvancedSearch(BaseViewModel baseViewModel)
         {
             InitializeComponent();
+            
             viewModel = baseViewModel;
             BindingContext = viewModel;
             Animation = new PopUpAnimation();

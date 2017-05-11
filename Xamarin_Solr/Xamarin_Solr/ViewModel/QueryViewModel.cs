@@ -149,6 +149,7 @@ namespace Xamarin_Solr.ViewModel
                 return new Command(() =>
                 {
                     SearchForDocumentAdvanced(adv_Query, adv_Filter, adv_Facet_Field, adv_Facet_Query);
+                    PopupNavigation.PopAsync();
                 });
             }
         }

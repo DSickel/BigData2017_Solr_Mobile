@@ -12,18 +12,22 @@
       <ScrollView>
         <StackLayout Orientation="Vertical">
           <Label Text="Query:"
+                 TextColor="White" FontSize="16"
                  HorizontalTextAlignment="Center"/>
           <Entry Text="{Binding Adv_Query, Mode=OneWayToSource}"
                  HorizontalTextAlignment="Center"/>
           <Label Text="Filter:"
+                 TextColor="White" FontSize="16"
                  HorizontalTextAlignment="Center"/>
           <Entry Text="{Binding Adv_Filter, Mode=OneWayToSource}"
                  HorizontalTextAlignment="Center"/>
           <Label Text="Facet Field:"
+                 TextColor="White" FontSize="16"
                  HorizontalTextAlignment="Center"/>
           <Entry Text="{Binding Adv_Facet_Field, Mode=OneWayToSource}"
                  HorizontalTextAlignment="Center"/>
           <Label Text="Facet Query:"
+                 TextColor="White" FontSize="16"
                  HorizontalTextAlignment="Center"/>
           <Entry Text="{Binding Adv_Facet_Query, Mode=OneWayToSource}"
                  HorizontalTextAlignment="Center"/>

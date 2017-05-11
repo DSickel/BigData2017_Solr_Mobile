@@ -80,7 +80,7 @@
                        VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"/>
   </StackLayout>
     <StackLayout Padding="5" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" BackgroundColor="#0090CC">
-      <Button Text="Search!" Grid.Row="2" Grid.Column="1"        
+      <Button Text="Advanced Search" Grid.Row="2" Grid.Column="1"        
            Command="{Binding OnAdvancedSearch_Clicked}"/>
     </StackLayout>
   </Grid>
